@@ -9,7 +9,8 @@ www/*
 !www/index.html
 **/.DS_Store
 www/site.me/.idea
-server/sites/httpd.conf
-server/sites/me.conf
+server/sites/*
+!server/sites/httpd.conf
+!server/sites/me.conf
 server/ssh/*
 !server/ssh/.gitkeep
