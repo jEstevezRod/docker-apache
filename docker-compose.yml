@@ -1,0 +1,61 @@
+version: "3"
+
+services: 
+  php73apache:
+    build: ./server
+    container_name: php73apache
+    environment: 
+      - "TZ=Europe/Madrid"
+    ports:
+      - '80:80'
+    volumes: 
+      - $PWD/www:/var/www
+      - $PWD/server/sites:/etc/apache2/sites-available/
+      - $PWD/server/php.ini:/etc/php/7.3/cli/conf.d/99-php.ini
+      - $PWD/server/php.ini:/etc/php/7.3/fpm/conf.d/99-php.ini
+      - $PWD/server/php.ini:/etc/php/7.3/apache2/conf.d/99-php.ini
+      - $PWD/server/ssh/sshd_config:/etc/ssh/sshd_config
+      - $PWD/server/.bashrc:/root/.bashrc
+      
+  #mysql:
+    #image: mysql:5.7
+    #container_name: mysql
+    #environment:
+      #MYSQL_ROOT_PASSWORD: 'password'
+    #volumes:
+      #- ./db:/var/lib/mysql:delegated
+    #expose:
+      #- '3306'
+    #ports:
+      #- '3306:3306'
+      
+  mariadb:
+    image: mariadb/server:10.2
+    ports:
+    - 3306:3306
+    container_name: amariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Europe/Madrid
+    volumes:
+    - ./mariadb:/var/lib/mariadb:delegated
+      
+  # database56:
+  #   image: mysql:5.6
+  #   container_name: database56
+  #   ports:
+  #   - '3306:3306'
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 'password'
+  #     TZ: Europe/Madrid
+  #   volumes:
+  #   - ./db56:/var/lib/mysql
+    
+  #phpmyadmin:
+    #image: phpmyadmin/phpmyadmin
+    #container_name: phpmyadmin
+    #ports:
+      #- '8080:80'
+    #environment:
+      #MYSQL_ROOT_PASSWORD: 'password'
+      #PMA_HOST: 'database'
